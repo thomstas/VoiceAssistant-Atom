@@ -36,5 +36,6 @@ number:
     initial_value: 0.8
     optimistic: true
     set_action:
-      - voice_assistant.set_volume: !lambda "return x;"
-      - speaker.set_volume: !lambda "return x;"
+      - media_player.volume_set:
+          id: echo_media_player
+          volume: !lambda "return x;"

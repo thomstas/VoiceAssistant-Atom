@@ -1,0 +1,14 @@
+# LED visual feedback configuration
+light:
+  - platform: fastled_clockless
+    chipset: SK6812
+    pin: GPIO27
+    num_leds: 1
+    rgb_order: GRB
+    name: "Led Ring"
+    id: led_ring
+    effects:
+      - pulse:
+          name: "Pulse"
+          transition_length: 250ms
+          update_interval: 250ms

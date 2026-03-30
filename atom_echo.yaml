@@ -1,0 +1,50 @@
+substitutions:
+  name: voice-assistant
+  friendly_name: voice assistant
+  micro_wake_word_model: alexa
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+
+esp32:
+  board: m5stack-atom
+  cpu_frequency: 240MHz
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "ZzQNsEgZDRxFCI9oZIIJ6bHa1h57Xgs9g56EDE4WA90="
+
+ota:
+  - platform: esphome
+    password: "4307aa23539c92366c00186349e6ab99"
+
+wifi:
+  ssid: !secret ha
+  password: !secret hapswd
+  # Enable fallback hotspot in case wifi connection fails
+  ap:
+    ssid: "Voice-Assistant Fallback"
+    password: "8bDimRAWTLzN"
+
+captive_portal:
+
+web_server:
+  port: 80
+
+button:
+  - platform: factory_reset
+    id: factory_reset_btn
+    name: Factory reset
+
+# Load separate configuration modules from the my_echo subdirectory
+packages:
+  audio: !include my_echo/audio.yaml
+  voice: !include my_echo/voice.yaml
+  leds: !include my_echo/leds.yaml

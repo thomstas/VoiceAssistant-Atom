@@ -1,0 +1,23 @@
+# Hardware audio configuration for M5Stack Atom Echo
+i2s_audio:
+  - id: i2s_audio_bus
+    i2s_lrclk_pin: GPIO33
+    i2s_bclk_pin: GPIO19
+
+microphone:
+  - platform: i2s_audio
+    id: echo_microphone
+    i2s_din_pin: GPIO23
+    adc_type: external
+    pdm: true
+
+speaker:
+  - platform: i2s_audio
+    id: echo_speaker
+    i2s_dout_pin: GPIO22
+    dac_type: external
+
+media_player:
+  - platform: speaker
+    name: "Echo Media Player"
+    id: echo_media_player

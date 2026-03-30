@@ -1,54 +1,40 @@
 substitutions:
-  name: voice-assistant
-  friendly_name: voice assistant
-  micro_wake_word_model: alexa
+  name: "atom-echo-assistant"
+  friendly_name: "Atom Echo"
 
 esphome:
   name: ${name}
   friendly_name: ${friendly_name}
+  # Immediate hardware test on boot
+  on_boot:
+    priority: -10
+    then:
+      - light.turn_on:
+          id: atom_led
+          brightness: 50%
+          red: 0%
+          green: 100%
+          blue: 0%
+      - delay: 1s
+      - light.turn_off: atom_led
 
 esp32:
   board: m5stack-atom
-  cpu_frequency: 240MHz
   framework:
-    type: esp-idf
-    # --- NEW BLOCK OF MEMORY OPTYMALISATION ---
-    sdkconfig_options:
-      CONFIG_ESP_HTTP_CLIENT_ENABLE_HTTPS: "n"
-      CONFIG_MBEDTLS_CERTIFICATE_BUNDLE: "n"
-    # ---------------------------------------
+    type: arduino # Critical for stable I2S audio on M5 Atom Echo
 
-# Enable logging
 logger:
+  level: DEBUG
 
-# Enable Home Assistant API
 api:
-  encryption:
-    key: !secret echo_api_key
 ota:
   - platform: esphome
-    password: "4307aa23539c92366c00186349e6ab99"
 
 wifi:
   ssid: !secret ha
   password: !secret hapswd
-  # Enable fallback hotspot in case wifi connection fails
-  ap:
-    ssid: "Voice-Assistant Fallback"
-    password: "8bDimRAWTLzN"
 
-captive_portal:
-
-web_server:
-  port: 80
-
-button:
-  - platform: factory_reset
-    id: factory_reset_btn
-    name: Factory reset
-
-# Load separate configuration modules from the my_echo subdirectory
-packages:
-  audio: !include my_echo/audio.yaml
-  voice: !include my_echo/voice.yaml
-  leds: !include my_echo/leds.yaml
+# Include modular components
+!include audio.yaml
+!include leds.yaml
+!include voice.yaml

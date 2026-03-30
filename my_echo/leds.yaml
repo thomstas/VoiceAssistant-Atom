@@ -1,14 +1,9 @@
-# LED visual feedback configuration using ESP-IDF native driver
 light:
   - platform: esp32_rmt_led_strip
-    chipset: SK6812
+    id: atom_led
     pin: GPIO27
     num_leds: 1
     rgb_order: GRB
-    name: "Led Ring"
-    id: led_ring
-    effects:
-      - pulse:
-          name: "Pulse"
-          transition_length: 250ms
-          update_interval: 250ms
+    rmt_channel: 0
+    chipset: SK6812
+    name: "Atom Status LED"

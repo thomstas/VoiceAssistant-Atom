@@ -6,9 +6,7 @@ micro_wake_word:
 voice_assistant:
   id: va
   microphone: echo_microphone
-  # Removed the direct 'speaker' definition to avoid exclusion conflict.
-  # The assistant will route audio through the media_player instead.
-  media_player: echo_media_player
+  speaker: echo_speaker   # <-- ZMIANA: Używamy natywnego przesyłu (oszczędza 100% pamięci na bufor!)
   use_wake_word: true
   
   # Triggered when wake word is detected and listening starts

@@ -12,6 +12,11 @@ esp32:
   cpu_frequency: 240MHz
   framework:
     type: esp-idf
+    # --- NEW BLOCK OF MEMORY OPTYMALISATION ---
+    sdkconfig_options:
+      CONFIG_ESP_HTTP_CLIENT_ENABLE_HTTPS: "n"
+      CONFIG_MBEDTLS_CERTIFICATE_BUNDLE: "n"
+    # ---------------------------------------
 
 # Enable logging
 logger:

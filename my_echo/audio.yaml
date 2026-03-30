@@ -1,31 +1,40 @@
-# Hardware audio configuration for M5Stack Atom Echo
 i2s_audio:
-  - id: i2s_audio_bus
+  - id: i2s_bus
     i2s_lrclk_pin: GPIO33
     i2s_bclk_pin: GPIO19
 
 microphone:
   - platform: i2s_audio
-    id: echo_microphone
+    id: echo_mic
+    i2s_audio_id: i2s_bus
     i2s_din_pin: GPIO23
-    adc_type: external
-    pdm: true
+    pdm: true # Required for SPM1423 mic
 
 speaker:
   - platform: i2s_audio
     id: echo_speaker
+    i2s_audio_id: i2s_bus
     i2s_dout_pin: GPIO22
     dac_type: external
-    bits_per_sample: 32bit
-    channel: right
-    buffer_duration: 60ms
+    mode: mono
 
+# Media player for audible responses
 media_player:
   - platform: speaker
-    name: "Echo Media Player"
     id: echo_media_player
-    announcement_pipeline:
-      speaker: echo_speaker
-      format: WAV
+    name: "Atom Speaker"
     codec_support_enabled: false
-    buffer_size: 6000
+
+# This creates the missing volume slider in Home Assistant
+number:
+  - platform: template
+    name: "Assistant Volume"
+    id: assistant_volume
+    min_value: 0
+    max_value: 1
+    step: 0.1
+    initial_value: 0.8
+    optimistic: true
+    set_action:
+      - voice_assistant.set_volume: !lambda "return x;"
+      - speaker.set_volume: !lambda "return x;"

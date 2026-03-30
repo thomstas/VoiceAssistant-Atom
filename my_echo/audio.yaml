@@ -21,3 +21,8 @@ media_player:
   - platform: speaker
     name: "Echo Media Player"
     id: echo_media_player
+    # --- NOWY BLOK WYMAGANY PRZEZ ESPHOME ---
+    announcement_pipeline:
+      speaker: echo_speaker
+      format: WAV
+    # ----------------------------------------

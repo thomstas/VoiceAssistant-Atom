@@ -1,6 +1,6 @@
-# LED visual feedback configuration
+# LED visual feedback configuration using ESP-IDF native driver
 light:
-  - platform: fastled_clockless
+  - platform: esp32_rmt_led_strip
     chipset: SK6812
     pin: GPIO27
     num_leds: 1

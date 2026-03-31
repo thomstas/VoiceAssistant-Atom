@@ -1,3 +1,7 @@
+micro_wake_word:
+  models:
+    - model: alexa
+
 voice_assistant:
   id: va
   microphone: echo_mic

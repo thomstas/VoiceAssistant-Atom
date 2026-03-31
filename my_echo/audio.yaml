@@ -24,6 +24,7 @@ media_player:
   - platform: speaker
     id: echo_media_player
     name: "Atom Speaker"
+    buffer_size: 16384
     announcement_pipeline:
       speaker: echo_speaker
     

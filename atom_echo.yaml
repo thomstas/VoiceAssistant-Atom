@@ -29,7 +29,10 @@ logger:
 api:
   encryption:
     key: !secret echo_api_key
-
+# Add OTA section with secret password reference
+ota:
+  - platform: esphome
+    password: !secret echo_ota_password
 wifi:
   ssid: !secret ha
   password: !secret hapswd

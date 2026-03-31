@@ -26,8 +26,7 @@ media_player:
     name: "Atom Speaker"
     announcement_pipeline:
       speaker: echo_speaker
-    codec_support_enabled: false
-
+    
 # This creates the missing volume slider in Home Assistant
 number:
   - platform: template

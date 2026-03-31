@@ -27,8 +27,8 @@ logger:
   level: DEBUG
 
 api:
-ota:
-  - platform: esphome
+  encryption:
+    key: !secret echo_api_key
 
 wifi:
   ssid: !secret ha

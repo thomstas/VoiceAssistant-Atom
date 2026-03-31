@@ -35,6 +35,6 @@ wifi:
   password: !secret hapswd
 
 # Include modular components
-!include audio.yaml
-!include leds.yaml
-!include voice.yaml
+!include my_echo/audio.yaml
+!include my_echo/leds.yaml
+!include my_echo/voice.yaml

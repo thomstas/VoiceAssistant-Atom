@@ -17,13 +17,15 @@ speaker:
     i2s_audio_id: i2s_bus
     i2s_dout_pin: GPIO22
     dac_type: external
-    mode: mono
+    i2s_mode: primary
 
 # Media player for audible responses
 media_player:
   - platform: speaker
     id: echo_media_player
     name: "Atom Speaker"
+    announcement_pipeline:
+      speaker: echo_speaker
     codec_support_enabled: false
 
 # This creates the missing volume slider in Home Assistant

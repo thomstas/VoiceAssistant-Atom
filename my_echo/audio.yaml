@@ -6,10 +6,12 @@ i2s_audio:
 microphone:
   - platform: i2s_audio
     id: echo_mic
-    adc_type: external
     i2s_audio_id: i2s_bus
     i2s_din_pin: GPIO23
-    pdm: true # Required for SPM1423 mic
+    adc_type: external
+    pdm: true
+    sample_rate: 16000      # <--- ADDED
+    correct_dc_offset: true # <--- ADDED (THIS RETURN AI HEARING!)
 
 speaker:
   - platform: i2s_audio

@@ -2,24 +2,24 @@
 micro_wake_word:
   models:
     - model: alexa
-  # This acts as a software amplifier so the AI can actually hear you
-  microphone:
-    microphone: echo_mic
-    gain_factor: 4
+  vad: # <--- DODANE (Sprzętowy detektor mowy)
   on_wake_word_detected:
     - voice_assistant.start:
         wake_word: !lambda return wake_word;
 
 voice_assistant:
   id: va
-  microphone: echo_mic
+  microphone:
+    microphone: echo_mic
+    channels: 0 # <--- DODANE (Izoluje mikrofon od głośnika)
+    gain_factor: 4
   media_player: echo_media_player
-  # Must be false so it doesn't conflict with local detection
-  use_wake_word: false 
+  use_wake_word: false
   noise_suppression_level: 2
   auto_gain: 31dBFS
   volume_multiplier: 2.0
-  on_listening:
+  
+    on_listening:
     - light.turn_on:
         id: atom_led
         blue: 100%

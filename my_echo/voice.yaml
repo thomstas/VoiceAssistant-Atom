@@ -2,24 +2,19 @@
 micro_wake_word:
   models:
     - model: alexa
-  vad: # <--- ADDED (HARDWARE SPEAK DETECTION)
   on_wake_word_detected:
     - voice_assistant.start:
-        wake_word: !lambda return wake_word;
+        wake_word: !lambda "return wake_word;"
 
 voice_assistant:
   id: va
-  microphone:
-    microphone: echo_mic
-    channels: 0 # <--- ADDED (MIC-SPEAKER ISOLATION)
-    gain_factor: 4
+  microphone: echo_mic
   media_player: echo_media_player
   use_wake_word: false
   noise_suppression_level: 2
   auto_gain: 31dBFS
   volume_multiplier: 2.0
-  
-    on_listening:
+  on_listening:
     - light.turn_on:
         id: atom_led
         blue: 100%

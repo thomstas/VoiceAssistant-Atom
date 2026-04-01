@@ -1,5 +1,8 @@
 i2s_audio:
-  - id: i2s_bus
+  - id: i2s_in
+    i2s_lrclk_pin: GPIO33
+    i2s_bclk_pin: GPIO19
+  - id: i2s_out
     i2s_lrclk_pin: GPIO33
     i2s_bclk_pin: GPIO19
 
@@ -7,7 +10,7 @@ microphone:
   - platform: i2s_audio
     id: echo_mic
     adc_type: external
-    i2s_audio_id: i2s_bus
+    i2s_audio_id: i2s_in
     i2s_din_pin: GPIO23
     pdm: true
     sample_rate: 16000
@@ -16,7 +19,7 @@ microphone:
 speaker:
   - platform: i2s_audio
     id: echo_speaker
-    i2s_audio_id: i2s_bus
+    i2s_audio_id: i2s_out
     i2s_dout_pin: GPIO22
     dac_type: external
     channel: mono

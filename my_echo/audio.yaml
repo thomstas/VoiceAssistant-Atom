@@ -27,6 +27,10 @@ media_player:
     name: "Atom Speaker"
     announcement_pipeline:
       speaker: echo_speaker
+    on_announcement:
+      - script.execute: stop_wake_word
+    on_idle:
+      - script.execute: start_wake_word
     # Usunięto codec_support_enabled: false (odtwarzacz obsłuży FLAC!)
     buffer_size: 8192 # Kompromis między stabilnością a pamięcią
 

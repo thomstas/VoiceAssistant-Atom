@@ -17,7 +17,7 @@ esphome:
           blue: 0%
       - delay: 1s
       - light.turn_off: atom_led
-      - micro_wake_word.start:
+      - script.execute: start_wake_word
       
 
 esp32:

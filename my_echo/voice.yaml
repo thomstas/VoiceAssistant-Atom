@@ -3,6 +3,7 @@ micro_wake_word:
     - model: alexa
   on_wake_word_detected:
     then:
+      - micro_wake_word.stop:
       - voice_assistant.start:
           wake_word: !lambda return wake_word;
 

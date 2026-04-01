@@ -1,45 +1,56 @@
-i2s_audio:
-  - id: i2s_bus
-    i2s_lrclk_pin: GPIO33
-    i2s_bclk_pin: GPIO19
+substitutions:
+  name: "atom-echo-assistant"
+  friendly_name: "Atom Echo"
 
-microphone:
-  - platform: i2s_audio
-    id: echo_mic
-    adc_type: external
-    i2s_audio_id: i2s_bus
-    i2s_din_pin: GPIO23
-    pdm: true
-    sample_rate: 16000
-    correct_dc_offset: true 
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  # Immediate hardware test on boot
+  on_boot:
+    priority: -10
+    then:
+      - light.turn_on:
+          id: atom_led
+          brightness: 50%
+          red: 0%
+          green: 100%
+          blue: 0%
+      - delay: 1s
+      - light.turn_off: atom_led
+      
 
-speaker:
-  - platform: i2s_audio
-    id: echo_speaker
-    i2s_audio_id: i2s_bus
-    i2s_dout_pin: GPIO22
-    dac_type: external
-    channel: stereo
+esp32:
+  board: m5stack-atom
+  cpu_frequency: 240MHz # <--- ADDED (Maximum power for AI)
+  framework:
+    type: esp-idf
 
-media_player:
-  - platform: speaker
-    id: echo_media_player
-    name: "Atom Speaker"
-    announcement_pipeline:
-      speaker: echo_speaker
-    # Usunięto codec_support_enabled: false (odtwarzacz obsłuży FLAC!)
-    buffer_size: 8192 # Kompromis między stabilnością a pamięcią
+logger:
+  level: DEBUG
 
-number:
-  - platform: template
-    name: "Assistant Volume"
-    id: assistant_volume
-    min_value: 0
-    max_value: 1
-    step: 0.1
-    initial_value: 0.8
-    optimistic: true
-    set_action:
-      - media_player.volume_set:
-          id: echo_media_player
-          volume: !lambda "return x;"
+api:
+  encryption:
+    key: !secret echo_api_key
+
+# Add OTA section with secret password reference
+ota:
+  - platform: esphome
+    password: !secret echo_ota_password
+
+wifi:
+  ssid: !secret ha
+  password: !secret hapswd
+  # Corrected indentation for manual_ip:
+  manual_ip:
+    static_ip: 192.168.0.245
+    gateway: 192.168.0.1
+    subnet: 255.255.255.0
+
+#web_server:
+# port: 80
+
+# Include modular components
+packages:
+  audio_config: !include my_echo/audio.yaml
+  leds_config: !include my_echo/leds.yaml
+  voice_config: !include my_echo/voice.yaml

@@ -11,7 +11,7 @@ voice_assistant:
   id: va
   microphone:
     microphone: echo_mic
-    channels: 0 # <--- DODANE (Izoluje mikrofon od głośnika)
+    channels: 0 # <--- ADDED (MIC-SPEAKER ISOLATION)
     gain_factor: 4
   media_player: echo_media_player
   use_wake_word: false

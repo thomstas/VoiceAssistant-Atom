@@ -27,10 +27,8 @@ media_player:
     name: "Atom Speaker"
     announcement_pipeline:
       speaker: echo_speaker
-    # Save RAM by disabling heavy codecs
-    codec_support_enabled: false
-    # Keep the custom buffer to prevent RAM crashes
-    buffer_size: 16384
+    # Usunięto codec_support_enabled: false (odtwarzacz obsłuży FLAC!)
+    buffer_size: 8192 # Kompromis między stabilnością a pamięcią
 
 number:
   - platform: template

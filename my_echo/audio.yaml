@@ -1,30 +1,25 @@
-# Shared I2S bus for both Mic and Speaker
 i2s_audio:
   - id: i2s_bus
     i2s_lrclk_pin: GPIO33
     i2s_bclk_pin: GPIO19
 
-# PDM Microphone (No channel setting here!)
 microphone:
   - platform: i2s_audio
     id: echo_mic
+    adc_type: external
     i2s_audio_id: i2s_bus
     i2s_din_pin: GPIO23
-    adc_type: external
     pdm: true
     sample_rate: 16000
-    correct_dc_offset: true
+    correct_dc_offset: true 
 
-# Speaker
 speaker:
   - platform: i2s_audio
     id: echo_speaker
     i2s_audio_id: i2s_bus
     i2s_dout_pin: GPIO22
     dac_type: external
-    bits_per_sample: 16bit
-    sample_rate: 16000
-    channel: stereo  # <--- ZMIANA Z MONO NA STEREO! To ożywi mikrofon.
+    channel: stereo
 
 media_player:
   - platform: speaker
@@ -32,7 +27,21 @@ media_player:
     name: "Atom Speaker"
     announcement_pipeline:
       speaker: echo_speaker
-      format: WAV # <--- Zmusza HA do wysyłania lekkich plików
-    codec_support_enabled: false # <--- Oszczędza RAM
-    buffer_size: 6000 # <--- Zgodnie z oficjalnym plikiem
-    codec_support_enabled: true
+    # Save RAM by disabling heavy codecs
+    codec_support_enabled: false
+    # Keep the custom buffer to prevent RAM crashes
+    buffer_size: 16384
+
+number:
+  - platform: template
+    name: "Assistant Volume"
+    id: assistant_volume
+    min_value: 0
+    max_value: 1
+    step: 0.1
+    initial_value: 0.8
+    optimistic: true
+    set_action:
+      - media_player.volume_set:
+          id: echo_media_player
+          volume: !lambda "return x;"

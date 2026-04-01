@@ -33,5 +33,5 @@ media_player:
     announcement_pipeline:
       speaker: echo_speaker
     # Dodajemy oryginalny bufor z oficjalnego kodu dla pewności
-    buffer_size: 6000
-    codec_support_enabled: false
+    buffer_size: 16384
+    codec_support_enabled: true

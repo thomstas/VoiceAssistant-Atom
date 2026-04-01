@@ -17,10 +17,12 @@ esphome:
           blue: 0%
       - delay: 1s
       - light.turn_off: atom_led
+      # Start local wake word detection automatically
+      - micro_wake_word.start:
 
 esp32:
   board: m5stack-atom
-  cpu_frequency: 240MHz # <--- DODANE (Maksymalna moc dla AI)
+  cpu_frequency: 240MHz # <--- ADDED (Maximum power for AI)
   framework:
     type: esp-idf
 
@@ -30,10 +32,12 @@ logger:
 api:
   encryption:
     key: !secret echo_api_key
+
 # Add OTA section with secret password reference
 ota:
   - platform: esphome
     password: !secret echo_ota_password
+
 wifi:
   ssid: !secret ha
   password: !secret hapswd
@@ -42,8 +46,10 @@ wifi:
     static_ip: 192.168.0.245
     gateway: 192.168.0.1
     subnet: 255.255.255.0
+
 #web_server:
 # port: 80
+
 # Include modular components
 packages:
   audio_config: !include my_echo/audio.yaml

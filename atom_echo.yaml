@@ -5,7 +5,7 @@ substitutions:
 esphome:
   name: ${name}
   friendly_name: ${friendly_name}
-  # Immediate hardware test on boot
+  # Immediate hardware test on boot, then start wake word detection
   on_boot:
     priority: -10
     then:
@@ -17,6 +17,7 @@ esphome:
           blue: 0%
       - delay: 1s
       - light.turn_off: atom_led
+      - micro_wake_word.start:
       
 
 esp32:

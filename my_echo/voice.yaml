@@ -2,7 +2,7 @@
 micro_wake_word:
   models:
     - model: alexa
-  vad: # <--- DODANE (Sprzętowy detektor mowy)
+  vad: # <--- ADDED (HARDWARE SPEAK DETECTION)
   on_wake_word_detected:
     - voice_assistant.start:
         wake_word: !lambda return wake_word;

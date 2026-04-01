@@ -18,6 +18,11 @@ voice_assistant:
   noise_suppression_level: 2
   auto_gain: 31dBFS
   volume_multiplier: 2.0
+  on_client_connected:
+    - script.execute: start_wake_word
+  on_client_disconnected:
+    - script.execute: stop_wake_word
+    - light.turn_off: atom_led
   on_listening:
     - light.turn_on:
         id: atom_led
@@ -68,6 +73,7 @@ script:
       - if:
           condition:
             and:
+              - voice_assistant.connected:
               - not:
                   voice_assistant.is_running:
               - not:

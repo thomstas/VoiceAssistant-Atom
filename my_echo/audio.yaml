@@ -32,6 +32,7 @@ media_player:
     name: "Atom Speaker"
     announcement_pipeline:
       speaker: echo_speaker
-    # Dodajemy oryginalny bufor z oficjalnego kodu dla pewności
-    buffer_size: 16384
+      format: WAV # <--- Zmusza HA do wysyłania lekkich plików
+    codec_support_enabled: false # <--- Oszczędza RAM
+    buffer_size: 6000 # <--- Zgodnie z oficjalnym plikiem
     codec_support_enabled: true
